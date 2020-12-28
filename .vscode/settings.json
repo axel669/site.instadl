@@ -1,0 +1,15 @@
+{
+    "liveServer.settings.NoBrowser": true,
+    "liveServer.settings.port": 1338,
+    "liveServer.settings.https": {
+        "enable": true,
+        "cert": "C:\\Users\\Axel\\Documents\\programming\\credentials\\cert.pem",
+        "key": "C:\\Users\\Axel\\Documents\\programming\\credentials\\key.pem",
+        "passphrase": "test"
+    },
+    "liveServer.settings.host": "0.0.0.0",
+    "liveServer.settings.ignoreFiles": [
+        "**/*"
+    ],
+    "liveServer.settings.root": "/output"
+}
