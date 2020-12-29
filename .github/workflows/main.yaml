@@ -21,6 +21,8 @@ jobs:
       - name: grab libs
         run: yarn install
       - name: build
-        run: export APP_VERSION=${GITHUB_BRANCH##*/} && npm run build-min
+        run: npm run build-min
+        env:
+          BRANCH: ${{ github.ref }}
       - name: deploy
         run: aws s3 sync ./output/ s3://instagram-dl.axel669.net/ --delete
