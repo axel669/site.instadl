@@ -2,13 +2,17 @@
     import {
         AppStyle,
         Baseline as baseline,
-        TronTheme as theme,
+        TronTheme,
+        LightTheme,
+        DarkTheme,
 
         Adornment,
         Button,
         HexagonSpinner,
         Icon,
+        Select,
         TextInput,
+        TitleBar,
     } from "svelte-doric"
 
     let sourceURL
@@ -46,13 +50,6 @@
             .filter(
                 js => js.indexOf("_sharedData = ") !== -1
             )[0]
-        // console.log(
-        //     Array
-        //         .from(
-        //             doc.querySelectorAll("meta[property='og:image']"),
-        //             node => node.getAttribute("content")
-        //         )
-        // )
         const data = JSON.parse(
             script.slice(20, -1)
         )
@@ -62,9 +59,6 @@
             .graphql
             .shortcode_media
 
-        // if (media.edge_sidecar_to_children === undefined) {
-        //     return [media.display_resources[2].src]
-        // }
         const urls = media.edge_sidecar_to_children === undefined
             ? [media.display_resources[2].src]
             : media
@@ -102,6 +96,21 @@
         anchor.download = info.filename
         anchor.click()
     }
+
+    const themes = [
+        {label: "Light", value: "light"},
+        {label: "Dark", value: "dark"},
+        {label: "Tron", value: "tron"},
+    ]
+    const themeMap = {
+        light: LightTheme,
+        dark: DarkTheme,
+        tron: TronTheme,
+    }
+    let selectedTheme = localStorage.theme ?? "light"
+
+    $: localStorage.theme = selectedTheme
+    $: theme = themeMap[selectedTheme]
 ;</script>
 
 <AppStyle {baseline} {theme} />
@@ -124,6 +133,7 @@
         overflow: hidden;
         margin: 2px;
         position: relative;
+        border: 1px solid var(--layer-border-color);
     }
     img {
         width: 100%;
@@ -136,29 +146,47 @@
 
     header-area {
         background-color: var(--background);
-        position: sticky;
-        top: 0px;
+        grid-area: bottom-adornment;
         display: grid;
         padding-bottom: 4px;
-        z-index: 5;
+        --text-normal: var(--text-secondary);
+        --control-border: var(--text-secondary);
+        --control-border-focus: var(--primary);
+    }
+
+    selected-theme {
+        display: block;
+        white-space: nowrap;
     }
 </style>
 
 <page-layout>
-    <header-area>
-        <TextInput variant="outline" bind:value={sourceURL} label="Instagram URL">
-            <Adornment position="start">
-                <Button color="primary" on:tap={load}>
-                    Load
-                </Button>
-            </Adornment>
-            <Adornment position="end">
-                <Button color="danger" on:tap={clear}>
-                    Clear
-                </Button>
-            </Adornment>
-        </TextInput>
-    </header-area>
+    <TitleBar sticky>
+        <title-text>Instagram Downloader</title-text>
+
+        <Adornment position="end">
+            <Select options={themes} bind:value={selectedTheme} variant="outline">
+                <selected-theme slot="selected" let:selectedItem>
+                    Theme: {selectedItem.label}
+                </selected-theme>
+            </Select>
+        </Adornment>
+
+        <header-area>
+            <TextInput variant="outline" bind:value={sourceURL} label="URL">
+                <Adornment position="start">
+                    <Button color="primary" on:tap={load}>
+                        Load
+                    </Button>
+                </Adornment>
+                <Adornment position="end">
+                    <Button color="danger" on:tap={clear}>
+                        Clear
+                    </Button>
+                </Adornment>
+            </TextInput>
+        </header-area>
+    </TitleBar>
     {#await url}
         <image-display>
             <HexagonSpinner />

@@ -587,10 +587,10 @@ supports-color@^7.0.0:
   dependencies:
     has-flag "^4.0.0"
 
-svelte-doric@^1.0.0-beta.1:
-  version "1.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/svelte-doric/-/svelte-doric-1.0.0-beta.1.tgz#b21f4ff749822d1c68a66dccb30ca946e4cada11"
-  integrity sha512-8tD1XzErlJceoZCttPAaf33/pPciJe0JY7OcNmjxp8kN5x1V3p5indmuRSCsyqamMbDT8nmeLZ4XsFGT9GEvKA==
+svelte-doric@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/svelte-doric/-/svelte-doric-1.0.2.tgz#78496071d25a3ae2e379e843d5963189b5f79668"
+  integrity sha512-9Qf1FyngBvJD7eVquA0CoLWVsgC3dcIISxEKl6li0DPu71NrwFhEBy9JWd7tWG6XRDaVIgkzi/EHmEc72V9/Fg==
 
 svelte@^3.24.0:
   version "3.24.1"
